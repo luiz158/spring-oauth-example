@@ -7,6 +7,7 @@ atlassian-ide-plugin.xml
 .classpath
 .project
 .settings/
+bin/
 
 # Build
 build/
