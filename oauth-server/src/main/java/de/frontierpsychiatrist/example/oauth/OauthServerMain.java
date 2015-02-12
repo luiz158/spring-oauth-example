@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.h2.server.web.WebServlet;
 
 import javax.sql.DataSource;
 
@@ -28,6 +30,13 @@ public class OauthServerMain {
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource mainDataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
+        registration.addUrlMappings("/console/*");
+        return registration;
     }
 
     public static void main(String[] args) {
