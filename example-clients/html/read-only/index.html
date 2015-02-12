@@ -57,8 +57,16 @@
         });
 
         app.controller('TodoCtrl', function($scope, $http) {
-            $http.get('http://localhost:8080/todos').success(function(todos) {
-                $scope.todos = todos;
+            $scope.todos = [];
+            $http.get('http://localhost:8080/todos').success(function(todos, status) {
+                console.log('OK todos=', todos);
+                console.log('OK status=', status);
+                if (status == 200) {
+                    $scope.todos = todos;
+                }
+            }).error(function(data, status, headers, config) {
+                console.log('ERROR data=', data);
+                console.log('ERROR status=', status);
             });
 
             $scope.switchTodo = function(todo) {
