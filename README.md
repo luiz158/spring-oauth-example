@@ -11,33 +11,39 @@ I had to include because it's not in the official packages.
 
 Just tell me how to run it
 --------------------------
+
 * Clone the repository
+
+* Start the database (this fork uses H2 via TCP):
+
+        java -jar h2-1.3.175.jar -webAllowOthers -tcpAllowOthers
+
 * If you have gradle installed, run
 
         gradle build
-    
+
     in the main directory. Otherwise run
 
         ./gradlew build
-        
+
     It will download a local gradle. On Windows use `gradlew.bat`.
 * Start the authorization server with
 
         java -jar oauth-server/build/libs/oauth-server-1.0.jar
-        
+
     And the resource server with
-  
+
         java -jar resource-server/build/libs/resource-server-1.0.jar
-        
+
     The authorization server runs under [http://localhost:8081](http://localhost:8081) and the resource server under
     [http://localhost:8080](http://localhost:8080).
 * Additionally you can start a http server in example-clients/html, e.g. like this
 
         cd example-clients/html
         ruby -run -e httpd . -p 9090
-        
+
     It will be reachable under [http://localhost:9090](http://localhost:9090).
-  
+
 Starting from within a IDE
 --------------------------
 If you want to play around with the java code it's more practicable to start from within your IDE. Just run either `OAuthServerMain` or
@@ -54,12 +60,12 @@ The login credentials should be displayed on the login page.
 The URL to get a new access token for a client is
 
     http://localhost:8081/oauth/authorize?client_id=$client_id&return_type=token&redirect_uri=some_uri
-    
+
 If the call to this URL is valid and you are logged in it will redirect to `some_uri` with an access token attached to the location hash. If
 you want to call this with cURL you have to set the cookie header to include the session id.
 
     curl .../oauth/authorize?... -H "Cookie: JSESSIONID=..."
-    
+
 which you can find in your browser development console.
 
 The resource server exposes a (very simple) REST API. You can use the example clients to access them or cURL after receiving an access token.
@@ -68,7 +74,7 @@ The resource server exposes a (very simple) REST API. You can use the example cl
     curl -v localhost:8080/todos/1 -H "Authorization: Bearer $token"
     curl -v -X DELETE localhost:8080/todos/1 -H "Authorization: Bearer $token"
     curl -v -X POST localhost:8080/tokens localhost:8080/todos/1 -H "Authorization: Bearer $token" -d "{ \"message\": \"Do stuff\", \"done\": false }"
-    
+
 Why?
 ----
 I wrote this because I had to get into OAuth with Spring and found it actually quite hard to find good examples and documentation. I hope
