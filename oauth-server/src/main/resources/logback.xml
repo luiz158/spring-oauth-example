@@ -2,10 +2,17 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <!--
+            %d{HH:mm:ss.SSS}
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] %-40.40logger{39} : %m%n%wex
+            %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta}
+            %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex
+            -->
+            <pattern>[%-5level] %-40.40logger{39} - %msg%n</pattern>
         </encoder>
     </appender>
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
 </configuration>
