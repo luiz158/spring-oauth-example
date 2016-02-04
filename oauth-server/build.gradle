@@ -1,11 +1,9 @@
 buildscript {
     repositories {
-        maven {
-            url "http://repo.spring.io/libs-release"
-        }
+      mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 apply plugin: 'spring-boot'
@@ -28,11 +26,11 @@ dependencies {
     compile("org.springframework.security.oauth:spring-security-oauth2:2.0.5.RELEASE")
 
     //Database driver
-    compile("org.xerial:sqlite-jdbc:3.7.2")
+    compile("mysql:mysql-connector-java:5.1.38")
 
     //GUI
     compile("org.webjars:bootstrap:3.2.0")
-    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3")
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE")
 
     compile project(":oauth-common")
 }
